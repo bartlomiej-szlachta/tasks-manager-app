@@ -1,9 +1,12 @@
 package com.example.tasksmanager
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+
+const val EXTRA_MODE = "com.example.tasksmanager.MODE"
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +23,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.new_task -> {
-                // TODO: run new activity here
+                val intent = Intent(this, TaskActivity::class.java).apply {
+                    putExtra(EXTRA_MODE, TaskActivityMode.CREATE)
+                }
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
