@@ -6,14 +6,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 
-const val EXTRA_MODE = "com.example.tasksmanager.MODE"
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        title = "Tasks list"
+        title = MAIN_ACTIVITY_TITLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

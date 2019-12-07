@@ -13,8 +13,8 @@ class TaskActivity : AppCompatActivity() {
 
         mode = intent.getSerializableExtra(EXTRA_MODE) as TaskActivityMode
         title = when (mode) {
-            TaskActivityMode.CREATE -> "New task"
-            TaskActivityMode.EDIT -> "Task details"
+            TaskActivityMode.CREATE -> TASK_ACTIVITY_TITLE_MODE_CREATE
+            TaskActivityMode.EDIT -> TASK_ACTIVITY_TITLE_MODE_EDIT
         }
     }
 }
