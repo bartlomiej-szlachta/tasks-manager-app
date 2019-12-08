@@ -14,9 +14,9 @@
     <string name="task_status_prompt">Choose status</string>
 
     <string-array name="task_priority_options">
-        <item>Low</item>
-        <item>Normal</item>
-        <item>High</item>
+        <item>High priority</item>
+        <item>Normal priority</item>
+        <item>Low priority</item>
     </string-array>
     <string name="task_priority_prompt">Choose priority</string>
 </resources>
