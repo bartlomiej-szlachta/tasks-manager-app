@@ -45,7 +45,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
     }
 
     fun getAllTasks(): List<TaskEntity> {
-        val query = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_STATUS_NAME;"
+        val query = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_STATUS_NAME," +
+                " (CASE WHEN $COLUMN_PRIORITY_NAME LIKE 'H%' THEN 0" +
+                " WHEN $COLUMN_PRIORITY_NAME LIKE 'N%' THEN 1" +
+                " WHEN $COLUMN_PRIORITY_NAME LIKE 'L%' THEN 2 END);"
         val db = this.readableDatabase
         val tasks = mutableListOf<TaskEntity>()
         val cursor = db.rawQuery(query, null)
@@ -55,8 +58,6 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
                 tasks.add(initializeTask(cursor))
             } while (cursor.moveToNext())
         }
-
-        sortTasks(tasks)
 
         cursor.close()
         db.close()
@@ -108,9 +109,5 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         val priority = cursor.getString(cursor.getColumnIndex(COLUMN_PRIORITY_NAME))
         val validFrom = cursor.getString(cursor.getColumnIndex(COLUMN_VALID_FROM_NAME))
         return TaskEntity(id, title, content, status, priority, validFrom)
-    }
-
-    private fun sortTasks(tasks: List<TaskEntity>) {
-        // TODO: sort tasks by status here
     }
 }
