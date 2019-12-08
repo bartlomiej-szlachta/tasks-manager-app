@@ -26,11 +26,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
 
     override fun onCreate(db: SQLiteDatabase?) {
         val query = "CREATE TABLE IF NOT EXISTS $TABLE_NAME (" +
-                "$COLUMN_ID_NAME INTEGER PRIMARY KEY," +
-                "$COLUMN_TITLE_NAME TEXT NOT NULL," +
-                "$COLUMN_CONTENT_NAME TEXT NOT NULL" +
-                "$COLUMN_PRIORITY_NAME TEXT NOT NULL" +
-                "$COLUMN_STATUS_NAME TEXT NOT NULL" +
+                "$COLUMN_ID_NAME INTEGER PRIMARY KEY, " +
+                "$COLUMN_TITLE_NAME TEXT NOT NULL, " +
+                "$COLUMN_CONTENT_NAME TEXT NOT NULL, " +
+                "$COLUMN_PRIORITY_NAME TEXT NOT NULL, " +
+                "$COLUMN_STATUS_NAME TEXT NOT NULL, " +
                 "$COLUMN_VALID_FROM_NAME DATE NOT NULL" +
                 ");"
         db?.execSQL(query)
