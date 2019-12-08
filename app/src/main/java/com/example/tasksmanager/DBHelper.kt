@@ -93,7 +93,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
 
     fun changeStatus(id: Int, newStatus: String) {
         val db = this.writableDatabase
-        TODO()
+        // TODO: update task status in database
     }
 
     private fun initializeTask(cursor: Cursor): TaskEntity {
@@ -107,6 +107,6 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
     }
 
     private fun sortTasks(tasks: List<TaskEntity>) {
-
+        // TODO: sort tasks by status here
     }
 }

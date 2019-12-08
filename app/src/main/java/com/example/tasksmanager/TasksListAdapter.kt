@@ -16,6 +16,9 @@ class TasksListAdapter(
         val view: View = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.list_item, parent, false)
+
+        // TODO: ripple effect on list items
+
         return ViewHolder(view)
     }
 

@@ -17,6 +17,9 @@ class NewTaskActivity : AppCompatActivity() {
         dbHelper = DBHelper(this)
 
         new_task_submit.setOnClickListener {
+
+            // TODO: validate inputs
+
             dbHelper.createTask(
                 new_task_title.text.toString(),
                 new_task_priority.selectedItem.toString(),

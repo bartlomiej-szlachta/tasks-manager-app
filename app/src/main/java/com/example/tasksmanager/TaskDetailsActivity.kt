@@ -11,6 +11,8 @@ class TaskDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_task_details)
         title = TASK_ACTIVITY_TITLE_MODE_EDIT
 
+        // TODO: set on click listener to status spinner
+
         initializeFields()
     }
 
