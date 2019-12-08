@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">TasksManager</string>
     <string name="new_task">New task</string>
+
+    <string name="new_task_submit">Create task</string>
+    
+    <string-array name="task_status_options">
+        <item>New</item>
+        <item>In progress</item>
+        <item>Solved</item>
+    </string-array>
+    <string name="task_status_prompt">Choose status</string>
+
+    <string-array name="task_priority_options">
+        <item>Low</item>
+        <item>Normal</item>
+        <item>High</item>
+    </string-array>
+    <string name="task_priority_prompt">Choose priority</string>
 </resources>

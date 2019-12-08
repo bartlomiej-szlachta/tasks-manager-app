@@ -22,6 +22,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         private const val COLUMN_PRIORITY_NAME = "priority"
         private const val COLUMN_STATUS_NAME = "status"
         private const val COLUMN_VALID_FROM_NAME = "valid_from"
+        private const val DATE_FORMAT = "dd.MM.yyyy HH:mm"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -42,19 +43,22 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
     }
 
     fun getAllTasks(): List<TaskEntity> {
-        val query = "SELECT * FROM $TABLE_NAME;"
+        val query = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_STATUS_NAME;"
         val db = this.readableDatabase
-        val people = mutableListOf<TaskEntity>()
+        val tasks = mutableListOf<TaskEntity>()
         val cursor = db.rawQuery(query, null)
 
         if (cursor.moveToFirst()) {
             do {
-                people.add(initializeTask(cursor))
+                tasks.add(initializeTask(cursor))
             } while (cursor.moveToNext())
         }
+
+        sortTasks(tasks)
+
         cursor.close()
         db.close()
-        return people
+        return tasks
     }
 
     fun getTaskById(taskId: Int): TaskEntity {
@@ -74,52 +78,35 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         return task
     }
 
-    fun createTask(task: TaskEntity) {
+    fun createTask(title: String, priority: String, content: String) {
         val db = this.writableDatabase
-        val value: ContentValues = initializeContentValues(task)
+        val value: ContentValues = contentValuesOf()
+        value.put(COLUMN_TITLE_NAME, title)
+        value.put(COLUMN_CONTENT_NAME, content)
+        value.put(COLUMN_STATUS_NAME, STATUS_NEW)
+        value.put(COLUMN_PRIORITY_NAME, priority)
+        value.put(COLUMN_VALID_FROM_NAME, SimpleDateFormat(DATE_FORMAT, Locale.US)
+            .format(Date()))
         db.insert(TABLE_NAME, null, value)
         db.close()
     }
 
-    fun changeStatus(id: Int, newStatus: TaskStatusEnum) {
+    fun changeStatus(id: Int, newStatus: String) {
         val db = this.writableDatabase
         TODO()
-    }
-
-    fun editTask(id: Int, task: TaskEntity) {
-        val db = this.writableDatabase
-        val value: ContentValues = initializeContentValues(task)
-        db.update(TABLE_NAME, value, "$COLUMN_ID_NAME =? ", arrayOf(id.toString()))
-        db.close()
-    }
-
-    fun deleteTask(id: Int) {
-        val db = this.writableDatabase
-        db.delete(TABLE_NAME, "$COLUMN_ID_NAME =? ", arrayOf(id.toString()))
-        db.close()
     }
 
     private fun initializeTask(cursor: Cursor): TaskEntity {
         val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID_NAME))
         val title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE_NAME))
         val content = cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT_NAME))
-        val statusName = cursor.getString(cursor.getColumnIndex(COLUMN_STATUS_NAME))
-        val priorityName = cursor.getString(cursor.getColumnIndex(COLUMN_PRIORITY_NAME))
-        val validFromString = cursor.getString(cursor.getColumnIndex(COLUMN_VALID_FROM_NAME))
-        val validFromDate: Date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
-            .parse(validFromString)!!
-        return TaskEntity(id, title, content, TaskStatusEnum.valueOf(statusName),
-            TaskPriorityEnum.valueOf(priorityName), validFromDate)
+        val status = cursor.getString(cursor.getColumnIndex(COLUMN_STATUS_NAME))
+        val priority = cursor.getString(cursor.getColumnIndex(COLUMN_PRIORITY_NAME))
+        val validFrom = cursor.getString(cursor.getColumnIndex(COLUMN_VALID_FROM_NAME))
+        return TaskEntity(id, title, content, status, priority, validFrom)
     }
 
-    private fun initializeContentValues(task: TaskEntity): ContentValues {
-        val value: ContentValues = contentValuesOf()
-        value.put(COLUMN_TITLE_NAME, task.title)
-        value.put(COLUMN_CONTENT_NAME, task.content)
-        value.put(COLUMN_STATUS_NAME, task.status.value)
-        value.put(COLUMN_PRIORITY_NAME, task.priority.value)
-        value.put(COLUMN_VALID_FROM_NAME, SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
-            .format(task.validFrom))
-        return value
+    private fun sortTasks(tasks: List<TaskEntity>) {
+
     }
 }

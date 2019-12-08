@@ -6,12 +6,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class TasksListAdapter(private val tasks: List<TaskEntity>) :
+class TasksListAdapter(
+    private val tasks: List<TaskEntity>,
+    private val itemClickListener: OnItemClickListener
+) :
     RecyclerView.Adapter<TasksListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
-//        view.setOnClickListener { view.todo_id.setTextColor(Color.GREEN) }
+        val view: View = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -20,17 +24,27 @@ class TasksListAdapter(private val tasks: List<TaskEntity>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val todo = tasks[position]
-        holder.todoTitle.text = todo.title
-        holder.todoStatus.text = todo.status.value
-        holder.todoPriority.text = todo.priority.value
-        holder.todoValidFrom.text = todo.validFrom.toString()
+        val task = tasks[position]
+        holder.bind(task, itemClickListener)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val todoTitle: TextView = itemView.findViewById(R.id.task_title)
-        val todoStatus: TextView = itemView.findViewById(R.id.task_status)
-        val todoPriority: TextView = itemView.findViewById(R.id.task_priority)
-        val todoValidFrom: TextView = itemView.findViewById(R.id.task_valid_from)
+        private var taskId: Int? = null
+        private val taskTitle: TextView = itemView.findViewById(R.id.task_title)
+        private val taskStatus: TextView = itemView.findViewById(R.id.task_status)
+        private val taskPriority: TextView = itemView.findViewById(R.id.task_priority)
+        private val taskValidFrom: TextView = itemView.findViewById(R.id.task_valid_from)
+
+        fun bind(task: TaskEntity, clickListener: OnItemClickListener) {
+            taskId = task.id
+            taskTitle.text = task.title
+            taskStatus.text = task.status
+            taskPriority.text = task.priority
+            taskValidFrom.text = task.validFrom
+
+            itemView.setOnClickListener {
+                clickListener.onItemClicked(task)
+            }
+        }
     }
 }
