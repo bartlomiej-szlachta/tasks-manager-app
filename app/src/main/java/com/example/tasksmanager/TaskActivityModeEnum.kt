@@ -1,5 +1,5 @@
 package com.example.tasksmanager
 
-enum class TaskActivityMode {
+enum class TaskActivityModeEnum {
     CREATE, EDIT
 }

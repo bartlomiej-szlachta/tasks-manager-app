@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.new_task -> {
                 val intent = Intent(this, TaskActivity::class.java).apply {
-                    putExtra(EXTRA_MODE, TaskActivityMode.CREATE)
+                    putExtra(EXTRA_MODE, TaskActivityModeEnum.CREATE)
                 }
                 startActivity(intent)
                 true
