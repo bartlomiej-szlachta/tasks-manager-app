@@ -8,5 +8,6 @@ const val TASK_ACTIVITY_TITLE_MODE_EDIT = "Task details"
 
 const val MESSAGE_TASK_ADDED = "Task added"
 const val MESSAGE_STATUS_UPDATED = "Status updated"
+const val MESSAGE_TITLE_REQUIRED = "Title is required"
 
 const val STATUS_NEW = "New"

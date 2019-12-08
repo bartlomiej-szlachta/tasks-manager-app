@@ -18,15 +18,16 @@ class NewTaskActivity : AppCompatActivity() {
 
         new_task_submit.setOnClickListener {
 
-            // TODO: validate inputs
+            val title = new_task_title.text.toString()
+            val description = new_task_description.text.toString()
 
-            dbHelper.createTask(
-                new_task_title.text.toString(),
-                new_task_priority.selectedItem.toString(),
-                new_task_description.text.toString()
-            )
-            Toast.makeText(this, MESSAGE_TASK_ADDED, Toast.LENGTH_SHORT).show()
-            finish()
+            if (title.length < 2) {
+                Toast.makeText(this, MESSAGE_TITLE_REQUIRED, Toast.LENGTH_SHORT).show()
+            } else {
+                dbHelper.createTask(title, new_task_priority.selectedItem.toString(), description)
+                Toast.makeText(this, MESSAGE_TASK_ADDED, Toast.LENGTH_SHORT).show()
+                finish()
+            }
         }
     }
 }
