@@ -12,6 +12,8 @@ import java.util.*
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
+    // TODO: constructor should be private (singleton)
+
     companion object {
         private const val DB_NAME = "tasks.db"
         private const val DB_VERSION = 1
@@ -85,15 +87,17 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         value.put(COLUMN_CONTENT_NAME, content)
         value.put(COLUMN_STATUS_NAME, STATUS_NEW)
         value.put(COLUMN_PRIORITY_NAME, priority)
-        value.put(COLUMN_VALID_FROM_NAME, SimpleDateFormat(DATE_FORMAT, Locale.US)
-            .format(Date()))
+        value.put(COLUMN_VALID_FROM_NAME, SimpleDateFormat(DATE_FORMAT, Locale.US).format(Date()))
         db.insert(TABLE_NAME, null, value)
         db.close()
     }
 
     fun changeStatus(id: Int, newStatus: String) {
         val db = this.writableDatabase
-        // TODO: update task status in database
+        val values = ContentValues()
+        values.put(COLUMN_STATUS_NAME, newStatus)
+        db.update(TABLE_NAME, values, "id=" + id.toLong(), null)
+        db.close()
     }
 
     private fun initializeTask(cursor: Cursor): TaskEntity {
