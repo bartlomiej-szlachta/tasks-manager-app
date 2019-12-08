@@ -20,7 +20,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         private const val TABLE_NAME = "tasks"
         private const val COLUMN_ID_NAME = "id"
         private const val COLUMN_TITLE_NAME = "title"
-        private const val COLUMN_CONTENT_NAME = "content"
+        private const val COLUMN_DESCRIPTION_NAME = "description"
         private const val COLUMN_PRIORITY_NAME = "priority"
         private const val COLUMN_STATUS_NAME = "status"
         private const val COLUMN_VALID_FROM_NAME = "valid_from"
@@ -31,7 +31,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         val query = "CREATE TABLE IF NOT EXISTS $TABLE_NAME (" +
                 "$COLUMN_ID_NAME INTEGER PRIMARY KEY, " +
                 "$COLUMN_TITLE_NAME TEXT NOT NULL, " +
-                "$COLUMN_CONTENT_NAME TEXT NOT NULL, " +
+                "$COLUMN_DESCRIPTION_NAME TEXT NOT NULL, " +
                 "$COLUMN_PRIORITY_NAME TEXT NOT NULL, " +
                 "$COLUMN_STATUS_NAME TEXT NOT NULL, " +
                 "$COLUMN_VALID_FROM_NAME DATE NOT NULL" +
@@ -80,11 +80,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         return task
     }
 
-    fun createTask(title: String, priority: String, content: String) {
+    fun createTask(title: String, priority: String, description: String) {
         val db = this.writableDatabase
         val value: ContentValues = contentValuesOf()
         value.put(COLUMN_TITLE_NAME, title)
-        value.put(COLUMN_CONTENT_NAME, content)
+        value.put(COLUMN_DESCRIPTION_NAME, description)
         value.put(COLUMN_STATUS_NAME, STATUS_NEW)
         value.put(COLUMN_PRIORITY_NAME, priority)
         value.put(COLUMN_VALID_FROM_NAME, SimpleDateFormat(DATE_FORMAT, Locale.US).format(Date()))
@@ -103,7 +103,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
     private fun initializeTask(cursor: Cursor): TaskEntity {
         val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID_NAME))
         val title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE_NAME))
-        val content = cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT_NAME))
+        val content = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION_NAME))
         val status = cursor.getString(cursor.getColumnIndex(COLUMN_STATUS_NAME))
         val priority = cursor.getString(cursor.getColumnIndex(COLUMN_PRIORITY_NAME))
         val validFrom = cursor.getString(cursor.getColumnIndex(COLUMN_VALID_FROM_NAME))

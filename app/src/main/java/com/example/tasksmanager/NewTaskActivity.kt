@@ -23,7 +23,7 @@ class NewTaskActivity : AppCompatActivity() {
             dbHelper.createTask(
                 new_task_title.text.toString(),
                 new_task_priority.selectedItem.toString(),
-                new_task_content.text.toString()
+                new_task_description.text.toString()
             )
             Toast.makeText(this, MESSAGE_TASK_ADDED, Toast.LENGTH_SHORT).show()
             finish()

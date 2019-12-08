@@ -41,6 +41,6 @@ class TaskDetailsActivity : AppCompatActivity() {
             "In progress" -> task_details_status.setSelection(1)
             "Solved" -> task_details_status.setSelection(2)
         }
-        task_details_content.text = task.content
+        task_details_description.text = task.description
     }
 }

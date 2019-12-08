@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">TasksManager</string>
-    <string name="new_task">New task</string>
 
+    <string name="new_task">New task</string>
+    <string name="new_task_title_hint">Title</string>
+    <string name="new_task_description_hint">Description</string>
     <string name="new_task_submit">Create task</string>
     
     <string-array name="task_status_options">

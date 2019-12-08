@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/new_task_title_hint"
         android:inputType="textPersonName"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +20,7 @@
 
     <Spinner
         android:id="@+id/new_task_priority"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/task_priority_options"
         android:prompt="@string/task_priority_prompt"
@@ -28,11 +29,12 @@
         app:layout_constraintTop_toBottomOf="@+id/new_task_title" />
 
     <EditText
-        android:id="@+id/new_task_content"
+        android:id="@+id/new_task_description"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="@string/new_task_description_hint"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +47,6 @@
         android:text="@string/new_task_submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_task_content" />
+        app:layout_constraintTop_toBottomOf="@+id/new_task_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
