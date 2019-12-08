@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/new_task_title_hint"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/new_task_description_hint"
-        android:inputType="textMultiLine"
+        android:inputType="textCapSentences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_task_priority" />
