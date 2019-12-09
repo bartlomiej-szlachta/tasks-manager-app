@@ -37,9 +37,9 @@ class TaskDetailsActivity : AppCompatActivity() {
         task_details_title.text = task.title
         task_details_priority.text = task.priority
         when (task.status) {
-            "New" -> task_details_status.setSelection(0)
-            "In progress" -> task_details_status.setSelection(1)
-            "Solved" -> task_details_status.setSelection(2)
+            STATUS_NEW -> task_details_status.setSelection(0)
+            STATUS_IN_PROGRESS -> task_details_status.setSelection(1)
+            STATUS_SOLVED -> task_details_status.setSelection(2)
         }
         task_details_description.text = task.description
     }

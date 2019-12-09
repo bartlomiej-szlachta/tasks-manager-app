@@ -11,3 +11,5 @@ const val MESSAGE_STATUS_UPDATED = "Status updated"
 const val MESSAGE_TITLE_REQUIRED = "Title is required"
 
 const val STATUS_NEW = "New"
+const val STATUS_IN_PROGRESS = "In progress"
+const val STATUS_SOLVED = "Solved"
