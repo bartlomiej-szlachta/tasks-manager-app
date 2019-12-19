@@ -1,20 +1,27 @@
 package com.example.tasksmanager
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_task_details.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import kotlinx.android.synthetic.main.fragment_task_details.*
 
-class TaskDetailsActivity : AppCompatActivity() {
+class TaskDetailsFragment(private val dbHelper: DBHelper) : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task_details)
-        title = TASK_ACTIVITY_TITLE_MODE_EDIT
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_task_details, container, false)
+    }
 
-        val taskId = intent.getStringExtra(TASK_ID_EXTRA)!!.toInt()
-        val dbHelper = DBHelper(this)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val taskId: Int = arguments?.getInt(TASK_ID_EXTRA)!!
 
         task_details_status.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -33,7 +40,7 @@ class TaskDetailsActivity : AppCompatActivity() {
     }
 
     private fun initializeFields(taskId: Int) {
-        val task = DBHelper(this).getTaskById(taskId)
+        val task = dbHelper.getTaskById(taskId)
         task_details_title.text = task.title
         task_details_priority.text = task.priority
         when (task.status) {

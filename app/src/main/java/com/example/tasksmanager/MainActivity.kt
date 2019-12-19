@@ -1,13 +1,9 @@
 package com.example.tasksmanager
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnItemClickListener {
 
@@ -16,17 +12,14 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        title = MAIN_ACTIVITY_TITLE
+        title = ACTIVITY_TITLE
 
         dbHelper = DBHelper(this)
 
-        tasks_list.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        tasks_list.adapter = TasksListAdapter(dbHelper.getAllTasks(), this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        tasks_list.adapter = TasksListAdapter(dbHelper.getAllTasks(), this)
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.fragment_container, TasksListFragment(dbHelper, this))
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -37,7 +30,13 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.new_task -> {
-                startActivity(Intent(this, NewTaskActivity::class.java))
+                supportFragmentManager
+                    .beginTransaction()
+                    .apply {
+                        replace(R.id.fragment_container, NewTaskFragment(dbHelper))
+                        addToBackStack(null)
+                    }
+                    .commit()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -45,8 +44,16 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     override fun onItemClicked(task: TaskEntity) {
-        val intent = Intent(this, TaskDetailsActivity::class.java)
-        intent.putExtra(TASK_ID_EXTRA, task.id.toString())
-        startActivity(intent)
+        val newFragment = TaskDetailsFragment(dbHelper)
+        val args = Bundle()
+        args.putInt(TASK_ID_EXTRA, task.id)
+        newFragment.arguments = args
+        supportFragmentManager
+            .beginTransaction()
+            .apply {
+                replace(R.id.fragment_container, newFragment)
+                addToBackStack(null)
+            }
+            .commit()
     }
 }
