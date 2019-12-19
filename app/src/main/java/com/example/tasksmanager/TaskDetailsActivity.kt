@@ -24,6 +24,7 @@ class TaskDetailsActivity : AppCompatActivity() {
                 id: Long
             ) {
                 dbHelper.changeStatus(taskId, parent.getItemAtPosition(position).toString())
+                // TODO: show toast on status changed (but not when the activity starts)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
